@@ -13,6 +13,7 @@ import signal
 from io import BytesIO
 
 import gevent
+import gevent.signal
 from gevent.event import Event
 from gevent.server import StreamServer
 
@@ -136,9 +137,9 @@ class ABCIServer:
 
         # wait for interrupt
         evt = Event()
-        gevent.signal(signal.SIGQUIT, evt.set)
-        gevent.signal(signal.SIGTERM, evt.set)
-        gevent.signal(signal.SIGINT, evt.set)
+        gevent.signal.signal(signal.SIGQUIT, evt.set)
+        gevent.signal.signal(signal.SIGTERM, evt.set)
+        gevent.signal.signal(signal.SIGINT, evt.set)
         evt.wait()
 
         log.info("Shutting down server")
